@@ -106,3 +106,25 @@ Services can be imported into the controllers to call the methods also.
 A method is just a function in class
 
 The names of the method can be same or different in the controller and the service classes.
+
+We cannnot do everything in the controller, because the if the business logics are more , going on using the service for the business logic will be easier. 
+
+![alt text](image-2.png)
+
+here we canot assign it as value, so we have to give the defaiult types in the method as parameters. like
+
+```ts
+  CreateTask(title: string, description: string): Task {
+    const task: Task = {
+      id: '',
+      title,
+      description,
+      status: TaskStatus.OPEN,
+    };
+  }
+```
+Here we gave it as default type so that we can use the title and description as the values.
+
+Using the postman to  get  the task dat.
+
+Post method is reated and used the  post method which was in service in the controller using the **@post** handler.
