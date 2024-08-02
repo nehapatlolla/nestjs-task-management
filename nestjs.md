@@ -98,3 +98,11 @@ We will be importing the services in the providers.
 Services can be imported into the controllers to call the methods also.
 
 ### In the app module.ts we need to  import the service class in the providers, not the controllers
+
+
+### Service class will own the business logic and interact with databases or external APIs, controller will be the entrypoint, it communicate with the service and return the result.
+
+
+A method is just a function in class
+
+The names of the method can be same or different in the controller and the service classes.

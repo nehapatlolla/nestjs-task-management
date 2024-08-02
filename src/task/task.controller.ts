@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { TaskService } from './task.service';
 
 // @Controller('task')
@@ -20,4 +20,9 @@ export class TaskController {
   //   helloWorld() {
   //     this.taskService.doSomething();
   //   }
+  @Get()
+  //we call this method whenever there is a get request
+  getAllTasks() {
+    return this.taskService.getAllTasks();
+  }
 }
