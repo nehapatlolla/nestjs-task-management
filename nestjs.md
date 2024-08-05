@@ -161,3 +161,8 @@ converts the JSON string back into a JavaScript object.
 
 
 - We cannot use a Dto when we are fetching the data. We need the seperate dtos for every parameter we are fetching, it becomes the complex
+
+## NestJs Pipes
+
+
+![alt text](image-7.png)
