@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { TaskService } from './task.service';
-import { Task } from './task.model';
+import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 
 // @Controller('task')
 // export class TaskController {
@@ -24,9 +34,14 @@ export class TaskController {
   //   }
   @Get()
   //we call this method whenever there is a get request
-  getAllTasks(): Task[] {
+  getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
     //imported the model.ts interface here in the controller
-    return this.taskService.getAllTasks();
+
+    if (Object.keys(filterDto).length) {
+      return this.taskService.getTasksWithFilters(filterDto);
+    } else {
+      return this.taskService.getAllTasks();
+    }
   }
   // @Post()
   // createNewTasks(
@@ -38,6 +53,23 @@ export class TaskController {
   @Post()
   CreateTask(@Body() CreateTaskDto: CreateTaskDto): Task {
     return this.taskService.CreateTask(CreateTaskDto);
+  }
+  //when we use /: we are saying nestjs that this is a path parameter
+  @Get('/:id')
+  getTaskById(@Param('id') id: string): Task {
+    return this.taskService.getTaskByID(id);
+  }
+
+  @Delete('/:id')
+  DeleteTaskById(@Param('id') id: string): void {
+    return this.taskService.DeletTaskById(id);
+  }
+  @Patch('/:id/status')
+  UpdatetaskStatus(
+    @Param('id') id: string,
+    @Body('status') Status: TaskStatus,
+  ): Task {
+    return this.taskService.UpdateTaskById(id, Status);
   }
 }
 

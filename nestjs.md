@@ -157,5 +157,7 @@ converts the JSON string back into a JavaScript object.
 
 ![alt text](image-5.png)
 
-Use only classes for the DTO because interfaces are the  part of the ts and they are not prserved after the compilation.
-## Fetching a single task by id
+- Use only classes for the DTO because interfaces are the  part of the ts and they are not prserved after the compilation.
+
+
+- We cannot use a Dto when we are fetching the data. We need the seperate dtos for every parameter we are fetching, it becomes the complex
