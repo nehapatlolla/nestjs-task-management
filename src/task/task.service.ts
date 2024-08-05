@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuid } from 'uuid';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 @Injectable()
 export class TaskService {
@@ -9,15 +10,22 @@ export class TaskService {
   getAllTasks(): Task[] {
     return this.tasks;
   }
-  CreateTask(title: string, description: string): Task {
+  // CreateTask(title: string, description: string): Task {
+  //   const task: Task = {
+  //     id: uuid(),
+  //     title,
+  //     description,
+  //     status: TaskStatus.OPEN,
+  //   };
+  //pushing the task which is created into the tasks which is the empty array in the service
+  CreateTask(CreateTaskDto: CreateTaskDto): Task {
+    const { title, description } = CreateTaskDto;
     const task: Task = {
       id: uuid(),
       title,
       description,
       status: TaskStatus.OPEN,
     };
-    //pushing the task which is created into the tasks which is the empty array in the service
-
     this.tasks.push(task);
     return task;
   }

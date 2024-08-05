@@ -128,3 +128,34 @@ Here we gave it as default type so that we can use the title and description as 
 Using the postman to  get  the task dat.
 
 Post method is reated and used the  post method which was in service in the controller using the **@post** handler.
+
+## DTO(Data transfer Object)
+
+The Http request is been generated, the request then goes to the controller body prameters are extracted, then we call crateTask method, then this method andles those arguments
+
+![alt text](image-3.png)
+
+A DtO is the object which carries data between the processes. 
+
+It is an object that defines how the data will be sent over the network.
+
+**Serialization** is the process of converting an object or data structure into a format that can be easily stored, transmitted.JSON, XML, and binary etc 
+
+```ts
+JSON.stringify()
+``` 
+converts the task object into a JSON string
+
+**Deserialization** is the reverse process of serialization. It involves converting serialized data (e.g., a JSON string) back into its original object or data structure.
+
+```ts
+JSON.parse()
+``` 
+converts the JSON string back into a JavaScript object.
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
+
+Use only classes for the DTO because interfaces are the  part of the ts and they are not prserved after the compilation.
+## Fetching a single task by id
