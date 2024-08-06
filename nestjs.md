@@ -164,5 +164,64 @@ converts the JSON string back into a JavaScript object.
 
 ## NestJs Pipes
 
+used for transforming and validating data in request handlers. They can be used to perform operations such as data validation.
 
 ![alt text](image-7.png)
+
+The ValidationPipe is commonly used with DTOs (Data Transfer Objects) and class-validator decorators to validate incoming request data.
+
+Applying Pipes: Pipes can be applied at the route handler level, controller level, or globally.
+
+
+Built-in Pipes: NestJS includes several built-in pipes like ValidationPipe, ParseIntPipe, and ParseUUIDPipe.
+
+## What is ORM?
+
+**Object-Relational Mapping (ORM)** is a technique that allows you to **interact with a database using objects** instead of writing raw SQL queries. It makes working with databases more intuitive by mapping database tables to classes in your code.
+
+### Entities
+
+Entities are used in conjunction with an ORM (Object-Relational Mapping) tool to represent and interact with database tables.
+
+- An entity is a class that maps to a database table. Each instance of the entity class corresponds to a row in the table.
+
+- The properties of the entity class represent the columns of the database table.
+
+- Entities use decorators to define metadata about the database schema, such as primary keys, column types, and relationships.
+
+## Active Record and Data Mapper
+
+Two design patterns used in object-relational mapping (ORM)
+
+- Both patterns help in mapping database tables to objects, but they handle this mapping in different ways.
+
+Active Record:
+
+Combines data and behavior (CRUD operations) in one class.
+
+Simpler for small applications but can become cumbersome in larger applications.
+
+Data Mapper:
+
+Separates data and behavior into different classes.
+
+More flexible and scalable, especially for complex applications.
+
+
+## Active Record vs. Data Mapper
+
+| Feature              | Active Record                                      | Data Mapper                                      |
+|----------------------|-----------------------------------------------------|--------------------------------------------------|
+| **What It Is**       | Combines data and database operations in one class | Keeps data and database operations separate      |
+| **Class Role**       | The class does its own database work               | The class only holds data; a separate class does the database work |
+| **How It Works**     | The object knows how to save, update, or delete itself | The object doesn’t handle database work; a mapper class does  |
+| **Code Structure**   | Simple and straightforward, all in one class       | More organized, with separate classes for data and database handling |
+| **When to Use**      | Good for simpler apps                              | Better for complex apps with more sophisticated data needs |
+
+
+
+When we used the typeORM in the app.module we used **forroot**
+
+And when we are using the TypeORM in the tasks.module we are using the **forfeature**
+
+Its like for the root module and the sub modules

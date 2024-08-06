@@ -3,6 +3,9 @@ import { Task, TaskStatus } from './task.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { HeyTask } from './task.entity';
 
 @Injectable()
 export class TaskService {
@@ -11,6 +14,21 @@ export class TaskService {
   getAllTasks(): Task[] {
     return this.tasks;
   }
+  constructor(
+    @InjectRepository(HeyTask)
+    private tasksRepository: Repository<HeyTask>, // Use Repository<HeyTask> directly
+  ) {}
+
+  // Custom method to find tasks by status
+  async getTasksByStatus(status: TaskStatus): Promise<HeyTask[]> {
+    return this.tasksRepository.find({ where: { status } });
+  }
+
+  // Custom method to find tasks by title
+  async getTasksByTitle(title: string): Promise<HeyTask[]> {
+    return this.tasksRepository.find({ where: { title } });
+  }
+
   // CreateTask(title: string, description: string): Task {
   //   const task: Task = {
   //     id: uuid(),

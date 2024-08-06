@@ -9,10 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
-import { Task } from './task.model';
+import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdatetaskStatusDto } from './dto/update-task-status.dto';
+import { HeyTask } from './task.entity';
 
 // @Controller('task')
 // export class TaskController {
@@ -72,6 +73,18 @@ export class TaskController {
   ): Task {
     const { status } = UpdatetaskStatusDto;
     return this.taskService.UpdateTaskById(id, status);
+  }
+
+  @Get('status/:status')
+  async getTasksByStatus(
+    @Param('status') status: TaskStatus,
+  ): Promise<HeyTask[]> {
+    return this.taskService.getTasksByStatus(status);
+  }
+
+  @Get('title/:title')
+  async getTasksByTitle(@Param('title') title: string): Promise<HeyTask[]> {
+    return this.taskService.getTasksByTitle(title);
   }
 }
 
