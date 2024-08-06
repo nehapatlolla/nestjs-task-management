@@ -34,17 +34,12 @@ export class TaskController {
   //   //   helloWorld() {
   //   //     this.taskService.doSomething();
   //   //   }
-  //   @Get()
-  //   //we call this method whenever there is a get request
-  //   getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
-  //     //imported the model.ts interface here in the controller
-
-  //     if (Object.keys(filterDto).length) {
-  //       return this.taskService.getTasksWithFilters(filterDto);
-  //     } else {
-  //       return this.taskService.getAllTasks();
-  //     }
-  //   }
+  @Get()
+  //we call this method whenever there is a get request
+  getTasks(@Query() filterDto: GetTasksFilterDto): Promise<HeyTask[]> {
+    //imported the model.ts interface here in the controller
+    return this.taskService.getTasks(filterDto);
+  }
   //   // @Post()
   //   // createNewTasks(
   //   //   @Body('title') title: string,

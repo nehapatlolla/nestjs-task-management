@@ -115,4 +115,7 @@ export class TaskService {
   //   }
   //   return newtasks;
   // }
+  getTasks(filterDto: GetTasksFilterDto): Promise<HeyTask[]> {
+    return this.tasksRepository.getTasks(filterDto);
+  }
 }
