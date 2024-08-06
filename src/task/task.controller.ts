@@ -76,43 +76,52 @@ export class TaskController {
   DeleteTaskById(@Param('id') id: string): Promise<void> {
     return this.taskService.DeleteTaskById(id);
   }
+
+  //   @Delete('/:id')
+  //   DeleteTaskById(@Param('id') id: string): void {
+  //     return this.taskService.DeletTaskById(id);
+  //   }
+
+  @Patch('/:id/status')
+  UpdatetaskStatus(
+    @Param('id') id: string,
+    @Body() UpdatetaskStatusDto: UpdatetaskStatusDto,
+  ): Promise<HeyTask> {
+    const { status } = UpdatetaskStatusDto;
+    return this.taskService.UpdateTaskById(id, status);
+  }
+  //   @Patch('/:id/status')
+  //   UpdatetaskStatus(
+  //     @Param('id') id: string,
+  //     @Body() UpdatetaskStatusDto: UpdatetaskStatusDto,
+  //   ): Task {
+  //     const { status } = UpdatetaskStatusDto;
+  //     return this.taskService.UpdateTaskById(id, status);
+  //   }
+
+  //   @Get('status/:status')
+  //   async getTasksByStatus(
+  //     @Param('status') status: TaskStatus,
+  //   ): Promise<HeyTask[]> {
+  //     return this.taskService.getTasksByStatus(status);
+  //   }
+
+  //   @Get('title/:title')
+  //   async getTasksByTitle(@Param('title') title: string): Promise<HeyTask[]> {
+  //     return this.taskService.getTasksByTitle(title);
+  //   }
+  // }
+
+  // // CreateTask(title: string, description: string): Task {
+  // //   const task: Task = {
+  // //     id: uuid(),
+  // //     title,
+  // //     description,
+  // //     status: TaskStatus.OPEN,
+  // //   };
+  // //   //pushing the task which is created into the tasks which is the empty array in the service
+
+  // //   this.tasks.push(task);
+  // //   return task;
+  // // }
 }
-
-//   @Delete('/:id')
-//   DeleteTaskById(@Param('id') id: string): void {
-//     return this.taskService.DeletTaskById(id);
-//   }
-//   @Patch('/:id/status')
-//   UpdatetaskStatus(
-//     @Param('id') id: string,
-//     @Body() UpdatetaskStatusDto: UpdatetaskStatusDto,
-//   ): Task {
-//     const { status } = UpdatetaskStatusDto;
-//     return this.taskService.UpdateTaskById(id, status);
-//   }
-
-//   @Get('status/:status')
-//   async getTasksByStatus(
-//     @Param('status') status: TaskStatus,
-//   ): Promise<HeyTask[]> {
-//     return this.taskService.getTasksByStatus(status);
-//   }
-
-//   @Get('title/:title')
-//   async getTasksByTitle(@Param('title') title: string): Promise<HeyTask[]> {
-//     return this.taskService.getTasksByTitle(title);
-//   }
-// }
-
-// // CreateTask(title: string, description: string): Task {
-// //   const task: Task = {
-// //     id: uuid(),
-// //     title,
-// //     description,
-// //     status: TaskStatus.OPEN,
-// //   };
-// //   //pushing the task which is created into the tasks which is the empty array in the service
-
-// //   this.tasks.push(task);
-// //   return task;
-// // }

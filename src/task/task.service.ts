@@ -87,6 +87,12 @@ export class TaskService {
     }
   }
 
+  async UpdateTaskById(Id: string, status: TaskStatus): Promise<HeyTask> {
+    const updateTask = await this.getTaskById(Id);
+    updateTask.status = status;
+    await this.tasksRepository.save(updateTask);
+    return updateTask;
+  }
   // UpdateTaskById(id: string, status: TaskStatus) {
   //   const updatetask = this.getTaskByID(id);
   //   updatetask.status = status;
