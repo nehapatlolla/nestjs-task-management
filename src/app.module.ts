@@ -6,6 +6,7 @@ import { TaskModule } from './task/task.module';
 import { TaskService } from './task/task.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HeyTask } from './task/task.entity';
+import { TasksRepository } from './task/task.repository';
 
 @Module({
   imports: [
@@ -23,6 +24,6 @@ import { HeyTask } from './task/task.entity';
     }),
   ],
   controllers: [AppController, TaskController],
-  providers: [AppService, TaskService],
+  providers: [AppService, TaskService, TasksRepository],
 })
 export class AppModule {}

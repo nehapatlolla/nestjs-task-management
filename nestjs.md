@@ -225,3 +225,51 @@ When we used the typeORM in the app.module we used **forroot**
 And when we are using the TypeORM in the tasks.module we are using the **forfeature**
 
 Its like for the root module and the sub modules
+
+## Interacting with the database.
+
+Commented out all the emthods in th econtroller and the service as we are goin to implemeny them using the persistance i.e Data persistence means that data is stored in a way that it remains available and intact even after the application or system that created it has ended or restarted.
+
+
+We are going to store them in the database
+
+
+- Whenever we are interacting with the data base it is an async operation so we will be defining the methods as a async methods.
+
+```ts
+async getTaskById(id:string):promise<Task>{
+  
+}
+```
+
+we are telling the type script that thus method is going to return a promise object
+
+[# typeorm methods](https://typeorm.io/repository-api)
+
+```ts
+  async CreateTask(CreateTaskDto: CreateTaskDto): Promise<HeyTask> {
+    const { title, description } = CreateTaskDto;
+    const task = this.tasksRepository.create({
+      title,
+      description,
+      status: TaskStatus.OPEN,
+    });
+    await this.tasksRepository.save(task);
+    return task;
+  }
+```
+
+Here instead of push in the previous methods. We actually save them into the database using await this.tasksRepository.save(task); this line.
+
+- database operations are asynhronous. If we dont use await on the database operation, code will not work
+
+### Delete functonality
+
+We can use delete and remove , both are same in the functionality  ut it is different how we call them
+
+> When we use delete it takes the id, or arrays of id or the object to delete, it doesnt check whether the id is present in the database or not. 
+
+```ts
+await repository.delete(1)
+await repository.delete([1, 2, 3])
+await repository.delete({ firstName: "Timber" })
