@@ -273,3 +273,22 @@ We can use delete and remove , both are same in the functionality  ut it is diff
 await repository.delete(1)
 await repository.delete([1, 2, 3])
 await repository.delete({ firstName: "Timber" })
+
+```
+## Introduction to authentication and authorization
+
+> Auth
+
+## storing the passwords securely
+
+We will be using hashing
+
+Hash is a one way function--> If we give the same input it always gives the same output
+
+Once hashing has been done, it should be impossible to go from the output to the input.
+
+Hash value cannot be decrypted
+
+## How we validate this password?
+
+The user goes into frontend and signin and we get the the password which they typed. We will run it through the same hashing function to output a hash, and we compare that hash with the hash that has been stored in the database. If they match then the pasword is correct.
