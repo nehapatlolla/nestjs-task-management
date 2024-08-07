@@ -277,9 +277,9 @@ await repository.delete({ firstName: "Timber" })
 ```
 ## Introduction to authentication and authorization
 
-> Auth
 
-## storing the passwords securely
+
+## Storing the passwords securely
 
 We will be using hashing
 
@@ -289,6 +289,90 @@ Once hashing has been done, it should be impossible to go from the output to the
 
 Hash value cannot be decrypted
 
-## How we validate this password?
+## How we validate this password? 🤔
 
 The user goes into frontend and signin and we get the the password which they typed. We will run it through the same hashing function to output a hash, and we compare that hash with the hash that has been stored in the database. If they match then the pasword is correct.
+
+> So when we verify the password, you dont decrypt the existing one, we just try to reproduce the correct password using users input.
+
+## Problem1 😳
+
+As we know hash is the one way function, if any other user gies the same password, ot stoes that password with the same hashname which was given to us in the database.
+
+## Problem2 😳
+
+
+If somebody attacks and gets ino the db and can read the hash value, they simply go to the rainbow table which shows or which maps the password with the hash value
+
+## Solution 😁
+ 
+- SALT
+ means 'demonstrate'
+
+
+somesalt_password--> here in the place of somesalt it the random number and then it stores. It prefixes the password with some random number.
+
+![alt text](image-8.png)
+
+Libraries which can help protect the passwords is `Bcrypt`
+
+Bcrypt will stoe the unique salt per password
+
+## JSON Web tokens (JWT)
+
+## imp points
+we  already have the users in the user repository so the signin method sould be implemented directly in the service.
+
+
+```ts
+ const userExists = await this.userRepository.findOne({
+      where: { username },
+    });
+```
+the findone methods this should be used, we cannot give findOne(username) directly
+
+In post handler we can give the return type as void, because we are not returning anything there.
+
+
+> If we want to create the custom repository these are the steps
+```ts
+This is the repository
+@Injectable()
+export class UserRepository extends Repository<UsersEntity> {
+  constructor(private dataSource: DataSource) {
+    super(UsersEntity, dataSource.createEntityManager());
+  }
+```
+
+```ts
+this is the service
+  @Injectable()
+export class AuthService {
+  constructor(private readonly userRepository: UserRepository) {}}
+```
+
+```ts
+this is the module
+@Module({
+  imports: [TypeOrmModule.forFeature([UsersEntity])],
+  providers: [AuthService, UserRepository],
+  controllers: [AuthController],
+})
+```
+
+```ts
+this is the controller
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) {}}
+```
+
+> For the validation in the to we need to import the validation globally in the main.ts
+
+```ts
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(3000);
+}
+```

@@ -6,14 +6,22 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { AuthCredentialsDTO } from './dto/auth.credentials.dto';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserRepository extends Repository<UsersEntity> {
   constructor(private dataSource: DataSource) {
     super(UsersEntity, dataSource.createEntityManager());
   }
-  async signUp(AuthCredentialsDTO: AuthCredentialsDTO): Promise<UsersEntity> {
+  async createUser(
+    AuthCredentialsDTO: AuthCredentialsDTO,
+  ): Promise<UsersEntity> {
     const { username, password } = AuthCredentialsDTO;
-    const newUser = this.create({ username, password });
+    //hash
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    console.log('salt', salt);
+    console.log('hashedPassword', hashedPassword);
+    const newUser = this.create({ username, password: hashedPassword });
 
     try {
       await this.save(newUser);
