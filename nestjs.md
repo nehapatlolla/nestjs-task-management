@@ -437,6 +437,117 @@ Here we want to connect the users to the tasks
   @ManyToOne((_types) => UsersEntity, (User) => User.tasks, { eager: false })
   User: UsersEntity[];
 ```
+here anyone can see the username and password if they fetch so we need to serialize.
+```ts
+{
+    "title": "hey all",
+    "description": "my name is neha",
+    "status": "Open",
+    "user": {
+        "id": "9515037f-dc00-4a45-86cd-e08e7595b148",
+        "username": "user5",
+        "password": "$2b$10$mYUC7b5Fhu4pXbWd6qtA9Oz9/94dIQPtD9AEUE09TLTSFvLVbFc4O",
+        "tasks": []
+    },
+    "id": "c99b2d3d-fdb4-424f-9008-e158e81600c8"}
+```
+
+### Eager Loading (eager: true)
+
+The **eager** option in TypeORM is used to control whether a related entity (in a ManyToOne, OneToMany, OneToOne, or ManyToMany relationship) should be automatically loaded when the main entity is queried from the database.
+
+
+When eager is set to true, TypeORM will automatically load the related entity every time the main entity is queried.
+
+
+> If you fetch a HeyTask entity, the associated user will be automatically included in the response.
+```sql
+SELECT * FROM hey_task 
+LEFT JOIN users_entity ON hey_task.user_id = users_entity.id
+```
+### Lazy Loading (eager: false)
+
+When **eager** is set to false (which is the default behavior), TypeORM does not automatically load the related entity. Instead, you must explicitly request the related data when querying the main entity.
+
+
+## How the GetUser Decorator Works
+
+The GetUser decorator in NestJS is a simple, reusable way to get the authenticated user's information from the request in your controller methods. 
+
+
+1. User Authentication:
+
+When a user makes a request to a protected route, the JWT token is verified by the JwtAuthGuard.
+
+If the token is valid, the JwtStrategy retrieves the user from the database and attaches it to the request object.
+
+2. Decorator Usage:
+
+The @GetUser() decorator in the controller method extracts the user from the request object.
+
+This user object is then available as a parameter in the controller method, allowing you to easily access user details.
+
+3. Controller Logic:
+
+You can then use this user object to perform operations, such as associating a task with the user or verifying user permissions.
+
+
+**Debugging Tip**
+
+If you find that the user is undefined when you use the @GetUser() decorator, you should:
+
+Ensure that the JWT token is being correctly validated and the user is being attached to the request in the 
+JwtStrategy.
+
+Add logging in the decorator to verify that the user property is indeed present on the request object.
+
+
+
+## Interceptor
+
+It allow us to do somehing like, when a req comes in we can process, change or transfom he data.
+
+
+we can apply the interceptor at handler level, controller or app level. 
+
+Here we used Exclude(toplaintext:true)
+this helps to hide the data which is in the json format or the plain text formAT.
+
+
+Our nest doesnt know how to use it so we use the interceptors.
+
+Interceptor is created and then we have to impor it in the main.ts. using app.global
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -539,3 +650,18 @@ async function bootstrap() {
 > SecretKey must be same 
 
 > we will be prefixing '_' to some of the parameters just because it should not complain that the param is not used.
+
+
+```ts
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { UsersEntity } from './user.entity';
+
+export const GetUser = createParamDecorator(
+  (_data, context: ExecutionContext): UsersEntity => {
+    const req = context.switchToHttp().getRequest();
+    console.log('User from request:', req.user);
+    return req.user;
+  },
+);
+```
+Struggled because i didnt put console.log 😕, even if we remove the console hard coding we can doit.

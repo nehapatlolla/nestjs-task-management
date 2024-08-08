@@ -10,7 +10,7 @@ export class UsersEntity {
   @Column()
   password: string;
 
-  @OneToMany(() => HeyTask, (task) => task.user, { eager: false })
+  @OneToMany(() => HeyTask, (task) => task.user, { eager: true })
   tasks: HeyTask[];
   // This will hold all tasks associated with this user
 }

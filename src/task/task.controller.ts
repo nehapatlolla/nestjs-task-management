@@ -41,9 +41,12 @@ export class TaskController {
   //   //   }
   @Get()
   //we call this method whenever there is a get request
-  getTasks(@Query() filterDto: GetTasksFilterDto): Promise<HeyTask[]> {
+  getTasks(
+    @Query() filterDto: GetTasksFilterDto,
+    @GetUser() user: UsersEntity,
+  ): Promise<HeyTask[]> {
     //imported the model.ts interface here in the controller
-    return this.taskService.getTasks(filterDto);
+    return this.taskService.getTasks(filterDto, user);
   }
   //   // @Post()
   //   // createNewTasks(
@@ -71,13 +74,19 @@ export class TaskController {
   //     return this.taskService.getTaskByID(id);
   //   }
   @Get('/:id')
-  async getTaskById(@Param('id') id: string): Promise<HeyTask> {
-    return this.taskService.getTaskById(id); // Correct
+  async getTaskById(
+    @Param('id') id: string,
+    @GetUser() user: UsersEntity,
+  ): Promise<HeyTask> {
+    return this.taskService.getTaskById(id, user); // Correct
   }
 
   @Delete('/:id')
-  DeleteTaskById(@Param('id') id: string): Promise<void> {
-    return this.taskService.DeleteTaskById(id);
+  DeleteTaskById(
+    @Param('id') id: string,
+    @GetUser() user: UsersEntity,
+  ): Promise<void> {
+    return this.taskService.DeleteTaskById(id, user);
   }
 
   //   @Delete('/:id')
@@ -89,9 +98,10 @@ export class TaskController {
   UpdatetaskStatus(
     @Param('id') id: string,
     @Body() UpdatetaskStatusDto: UpdatetaskStatusDto,
+    @GetUser() user: UsersEntity,
   ): Promise<HeyTask> {
     const { status } = UpdatetaskStatusDto;
-    return this.taskService.UpdateTaskById(id, status);
+    return this.taskService.UpdateTaskById(id, status, user);
   }
   //   @Patch('/:id/status')
   //   UpdatetaskStatus(
