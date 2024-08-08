@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 
 import { HeyTask } from './task.entity';
 import { TaskStatus } from './task.model';
 import { TasksRepository } from './task.repository';
+import { UsersEntity } from 'src/auth/user.entity';
 
 @Injectable()
 export class TaskService {
@@ -13,7 +13,9 @@ export class TaskService {
   // private tasks: Task[] = [];//we are goinfg to store the tasks into the data base
   constructor(
     // @InjectRepository(HeyTask)
-    private readonly tasksRepository: TasksRepository, // Use Repository<HeyTask> directly
+    private readonly tasksRepository: TasksRepository,
+
+    // Use Repository<HeyTask> directly
   ) {}
   // //only the task service has the access to this tasks, not any other controller or the provider cannot use it.
   // getAllTasks(): Task[] {
@@ -49,8 +51,11 @@ export class TaskService {
   //   this.tasks.push(task);
   //   return task;
   // }
-  async createtask(CreateTaskDto: CreateTaskDto): Promise<HeyTask> {
-    return this.tasksRepository.createtask(CreateTaskDto);
+  async createtask(
+    CreateTaskDto: CreateTaskDto,
+    user: UsersEntity,
+  ): Promise<HeyTask> {
+    return this.tasksRepository.createtask(CreateTaskDto, user);
     // return this.taskService.CreateTask(CreateTaskDto);
   }
 

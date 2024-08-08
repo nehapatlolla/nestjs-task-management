@@ -7,12 +7,16 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdatetaskStatusDto } from './dto/update-task-status.dto';
 import { HeyTask } from './task.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { UsersEntity } from 'src/auth/user.entity';
+import { GetUser } from 'src/auth/get-user.decorator';
 
 // @Controller('task')
 // export class TaskController {
@@ -26,6 +30,7 @@ import { HeyTask } from './task.entity';
 //   }
 
 @Controller('task')
+@UseGuards(AuthGuard())
 export class TaskController {
   constructor(private taskService: TaskService) {}
 
@@ -53,8 +58,11 @@ export class TaskController {
   //   }
 
   @Post()
-  async CreateTask(@Body() CreateTaskDto: CreateTaskDto): Promise<HeyTask> {
-    return this.taskService.createtask(CreateTaskDto);
+  async CreateTask(
+    @Body() CreateTaskDto: CreateTaskDto,
+    @GetUser() user: UsersEntity,
+  ): Promise<HeyTask> {
+    return this.taskService.createtask(CreateTaskDto, user);
   }
 
   //   //when we use /: we are saying nestjs that this is a path parameter

@@ -4,9 +4,11 @@ import { TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Injectable } from '@nestjs/common';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { UsersEntity } from 'src/auth/user.entity';
 
 @Injectable()
 export class TasksRepository extends Repository<HeyTask> {
+  userRepository: any;
   constructor(dataSource: DataSource) {
     super(HeyTask, dataSource.createEntityManager());
   }
@@ -30,12 +32,16 @@ export class TasksRepository extends Repository<HeyTask> {
     return tasks;
   }
 
-  async createtask(CreateTaskDto: CreateTaskDto): Promise<HeyTask> {
+  async createtask(
+    CreateTaskDto: CreateTaskDto,
+    user: UsersEntity,
+  ): Promise<HeyTask> {
     const { title, description } = CreateTaskDto;
     const task = this.create({
       title,
       description,
       status: TaskStatus.OPEN,
+      user,
     });
     await this.save(task);
     return task;

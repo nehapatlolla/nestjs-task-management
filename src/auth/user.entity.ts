@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { HeyTask } from 'src/task/task.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UsersEntity {
@@ -8,4 +9,8 @@ export class UsersEntity {
   username: string;
   @Column()
   password: string;
+
+  @OneToMany(() => HeyTask, (task) => task.user, { eager: false })
+  tasks: HeyTask[];
+  // This will hold all tasks associated with this user
 }

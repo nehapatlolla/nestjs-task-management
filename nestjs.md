@@ -408,15 +408,35 @@ If there is a constructor in the derived class they need to call `super` to init
 - Whenever we want to protect the routes for only the signed in users, we will be able to import the auth module and then use the guard. CCORDINGLY THE ROUTES WILL BE PROTECTED AND WHEN THE AUTHORIZED USED SENDS A REQUEST WE WILL BE ABLE TO GET THEM and we treat it as truth.
 
 
+@GetUser Decorator is created for that particular request to go into that decorator and that will be handling that request.
+
+Finally **Guarding the tasks** is done by importing the authmodule into the providers of the tasks module and in the controller use the **@USEGuards(AuthGuard( ))** decorator
 
 
 
 
+> Auth Part 2
+
+Tasks and users -> Database relation
+
+## Relation
+
+When you have a relation, one of the sides of that relation can be eager. When it is set to true here it is for "User", whenever we fetch the user we are goinhg to fetch the tasks as well , no need of manually doing it
+
+Here we want to connect the users to the tasks 
 
 
+> This is the usersEntity
+```ts
+@OneToMany((_types) => HeyTask, (task) => task.User, { eager: true })
+  tasks: HeyTask[];
+```
+> This is the Task entity.ts
 
-
-
+```ts
+  @ManyToOne((_types) => UsersEntity, (User) => User.tasks, { eager: false })
+  User: UsersEntity[];
+```
 
 
 
@@ -514,3 +534,8 @@ async function bootstrap() {
 - Call that repository in the service
 
 - Call the service in the controller using the handlers which are required.
+
+
+> SecretKey must be same 
+
+> we will be prefixing '_' to some of the parameters just because it should not complain that the param is not used.
