@@ -9,8 +9,8 @@ import { UsersEntity } from './user.entity';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly userRepository: UserRepository) {
     super({
-      secretOrKey: 'topSecret18',
-      ignoreExpiration: false,
+      secretOrKey: 'topsecret18',
+      //   ignoreExpiration: false,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
   }

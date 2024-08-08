@@ -350,7 +350,7 @@ JWT's can be decoded by anyone and they should not contain any sensitive informa
 We are going to use the Passsport JS which is the authentication middleware for the Node.js it supports multiple strategies and one of the strategy is JWT
 
 
-command
+#### command
 
 ```ts
 yarn add @nestjs/jwt @nestjs/passport passp
@@ -400,6 +400,41 @@ gives the type to use the typescript integrating with passport jwt easier
 In Jwt.strategy.ts we have added a class
 . And it is a derived class. Jwt strategy is derived from passport strategy .
 If there is a constructor in the derived class they need to call `super` to initialize the parent class
+
+
+
+> Summary on JWT validation
+
+- Whenever we want to protect the routes for only the signed in users, we will be able to import the auth module and then use the guard. CCORDINGLY THE ROUTES WILL BE PROTECTED AND WHEN THE AUTHORIZED USED SENDS A REQUEST WE WILL BE ABLE TO GET THEM and we treat it as truth.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
