@@ -48,19 +48,19 @@ nest-cli.json: Remove if not using CLI configuration.
 Instead of a class (like a car) creating its own dependencies (like the key), you provide those dependencies from outside. This makes the code cleaner and easier to manage.
 
 ## Decorators
-DEcorators are the special kind of function and it can be attached to any methods, classes objects, The decorator can modify their behaviour and even it can add the meta data
+Decorators are the special kind of function and it can be attached to any methods, classes objects, The decorator can modify their behaviour and even it can add the meta data
 
-## controller
+## Controller
 
 It is a class which is annotated with the @controller decorator.
 
 Actions have methods. 
 
-Job of the controller is to creeate the endpoints. 
+Job of the controller is to create the endpoints. 
 
 It controls the process of handling the requests.
 
-responsible for recieving incoming requests and returning a response
+Responsible for recieving incoming requests and returning a response
 
 ## Providers.
 
@@ -75,6 +75,7 @@ To define a provider, you create a class and use the @Injectable() decorator to 
 2. Registering a Provider
 
 Providers must be registered in a module so that they can be injected where needed. This is done in the providers array of a module.
+
 3. Injecting Providers
 
 To use a provider in another component (like a controller or another service), you inject it through the constructor of that class.
@@ -278,7 +279,7 @@ await repository.delete({ firstName: "Timber" })
 ## Introduction to authentication and authorization
 
 
-
+> Auth part1
 ## Storing the passwords securely
 
 We will be using hashing
@@ -319,8 +320,100 @@ Libraries which can help protect the passwords is `Bcrypt`
 Bcrypt will stoe the unique salt per password
 
 ## JSON Web tokens (JWT)
+## What is JWT?
 
-## imp points
+JWT stands for JSON Web Token. It’s a way to securely transmit information between parties as a JSON object. It's commonly used for authentication and information exchange.
+
+### How Does JWT Work?
+1. JWT Structure:
+
+A JWT is composed of three parts:
+
+**Header**: Contains information about how the token is encoded.
+
+**Payload**: Contains the data you want to transmit (like user information or claims).
+
+**Signature**: Ensures the token hasn’t been altered.
+
+**header.payload.signature**
+
+![alt text](image-9.png)
+![alt text](image-10.png)
+
+![alt text](image-11.png)
+
+JWT's can be decoded by anyone and they should not contain any sensitive information
+
+![alt text](image-12.png)
+
+
+We are going to use the Passsport JS which is the authentication middleware for the Node.js it supports multiple strategies and one of the strategy is JWT
+
+
+command
+
+```ts
+yarn add @nestjs/jwt @nestjs/passport passp
+ort passport-jwt
+```
+add the following imports into the auth module
+```ts
+@Module({
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: 'topsecret18',
+      signOptions: { expiresIn: 3600 },
+    }),
+```
+
+
+
+we can give the return type like this
+```ts
+  async signIn(
+    AuthCredentialsDTO: AuthCredentialsDTO,
+  ): Promise<{ accessToken: string }>
+```
+[Jwt accesstoken decoder](https://jwt.io/)
+
+
+```ts
+{
+  "username": "pawankalyan",
+  "iat": 1723033438,
+  "exp": 1723037038
+}
+
+iat :issued at
+Timestamp: It provides a timestamp for when the token was issued.
+
+exp (expiration) claim is crucial for managing token lifespan.
+```
+
+command 
+
+yarn add @types/passport-jwt
+
+gives the type to use the typescript integrating with passport jwt easier
+
+In Jwt.strategy.ts we have added a class
+. And it is a derived class. Jwt strategy is derived from passport strategy .
+If there is a constructor in the derived class they need to call `super` to initialize the parent class
+
+
+
+
+
+
+
+
+
+
+
+
+## common mistakes I've been doing LMAO 😬
+
 we  already have the users in the user repository so the signin method sould be implemented directly in the service.
 
 
@@ -376,3 +469,13 @@ async function bootstrap() {
   await app.listen(3000);
 }
 ```
+
+> What ever the new modules we are going to create they will be automatically gets imported into the appmodule
+
+#### The flow of methods 
+
+- Write the logic in the repository
+
+- Call that repository in the service
+
+- Call the service in the controller using the handlers which are required.
