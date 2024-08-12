@@ -298,7 +298,7 @@ The user goes into frontend and signin and we get the the password which they ty
 
 ## Problem1 😳
 
-As we know hash is the one way function, if any other user gies the same password, ot stoes that password with the same hashname which was given to us in the database.
+As we know hash is the one way function, if any other user gives the same password, ot stores that password with the same hash name which was given to us in the database.
 
 ## Problem2 😳
 
@@ -311,13 +311,13 @@ If somebody attacks and gets ino the db and can read the hash value, they simply
  means 'demonstrate'
 
 
-somesalt_password--> here in the place of somesalt it the random number and then it stores. It prefixes the password with some random number.
+somesalt_password--> here in the place of somesalt it prefixes the random number and then it stores. It prefixes the password with some random number.
 
 ![alt text](image-8.png)
 
 Libraries which can help protect the passwords is `Bcrypt`
 
-Bcrypt will stoe the unique salt per password
+Bcrypt will store the unique salt per password
 
 ## JSON Web tokens (JWT)
 ## What is JWT?
@@ -325,7 +325,7 @@ Bcrypt will stoe the unique salt per password
 JWT stands for JSON Web Token. It’s a way to securely transmit information between parties as a JSON object. It's commonly used for authentication and information exchange.
 
 ### How Does JWT Work?
-1. JWT Structure:
+**JWT Structure:**
 
 A JWT is composed of three parts:
 
@@ -421,7 +421,7 @@ Tasks and users -> Database relation
 
 ## Relation
 
-When you have a relation, one of the sides of that relation can be eager. When it is set to true here it is for "User", whenever we fetch the user we are goinhg to fetch the tasks as well , no need of manually doing it
+When you have a relation, one of the sides of that relation can be eager. When it is set to true here it is for "User", whenever we fetch the user we are going to fetch the tasks as well , no need of manually doing it
 
 Here we want to connect the users to the tasks 
 
@@ -492,7 +492,7 @@ This user object is then available as a parameter in the controller method, allo
 You can then use this user object to perform operations, such as associating a task with the user or verifying user permissions.
 
 
-**Debugging Tip**
+> **Debugging Tip**
 
 If you find that the user is undefined when you use the @GetUser() decorator, you should:
 
@@ -516,13 +516,13 @@ this helps to hide the data which is in the json format or the plain text formAT
 
 Our nest doesnt know how to use it so we use the interceptors.
 
-Interceptor is created and then we have to impor it in the main.ts. using app.global
+Interceptor is created and then we have to import it in the main.ts. using app.global
 
 ## Loggers
 
 Why do we need logs?
 
-we are having so many operations in h epplication, to know whats wrong we use logs, 
+we are having so many operations in the application, to know whats wrong we use logs, 
 
 **Types:**
 
@@ -655,6 +655,80 @@ Using joi.object we can validate the data
 4. In the auth module import the config module,in jwt stratgy inject the config service 
 5. In the jwt strategy we change the value of the secret key to the configservice.get('JWT_SECRET')
 6. In the auth module if we want to call the jwt module register, we also call it with the register async. Same process of the usefactory
+
+# Asynchronous (Async)
+
+**Asynchronous Operations:** These operations allow the application to continue executing without waiting for the operation to complete. 
+
+Example: A method or service that performs an HTTP request or accesses a database, returning a Promise or Observable:
+
+
+```ts
+@Injectable()
+export class AsyncService {
+  async getAsyncData(): Promise<string> {
+    return await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('This is asynchronous data');
+      }, 2000);
+    });
+  }
+}
+```
+**Usage in Module Configuration:** When dealing with asynchronous operations during module configuration, you might need to use an async factory function:
+
+```ts
+@Module({
+  imports: [
+    ConfigModule.forRootAsync({
+      useFactory: async () => {
+        const config = await someAsyncFunction();
+        return config;
+      },
+    }),
+  ],
+})
+export class AppModule {}
+```
+**Asynchronous Module Initialization**: 
+ When setting up modules that require asynchronous operations (e.g., connecting to a database, loading configuration), you often use the forRootAsync or similar methods, which accept an async factory to handle the asynchronous nature of the initialization.
+
+
+```ts
+@Module({
+  imports: [
+    DatabaseModule.forRootAsync({
+      useFactory: async () => ({
+        type: 'mysql',
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT, 10),
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+      }),
+    }),
+  ],
+})
+export class AppModule {}
+```
+In summary, "sync" refers to synchronous operations that execute immediately and return a value directly, while "async" refers to asynchronous operations that may take time to complete and typically return a Promise or Observable that resolves later.
+
+## When to Use forRoot?
+
+**Single Global Configuration:** When you need to configure a module that will be used application-wide and should have a single, consistent configuration.
+
+**Reusable Modules:** For modules that might be used in multiple projects, forRoot can provide a flexible way to initialize the module with project-specific settings.
+
+
+### Middleware
+
+Middleware refers to functions or classes that have access to the request-response cycle in an application.
+
+v Middleware functions are used to process requests before they reach the route handlers or to modify the response before it is sent back to the client.
+
+
+
+
 
 
 
