@@ -584,6 +584,13 @@ You an also support values via environment variables which are provided when run
 
 - Whenever you are making any changes in the env files you need to restart the application.
 
+> useFactory is a function in NestJS that allows you to set up something (like a database connection) dynamically, based on certain conditions or values.
+
+> useFactory is used to create the database connection settings based on environment variables. This way, you can easily switch between different environments or configurations without changing the code.
+
+
+Here in the appmodule you need to do these.
+```ts
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -613,7 +620,8 @@ You an also support values via environment variables which are provided when run
   ],
   controllers: [AppController, TaskController],
   providers: [AppService, TaskService, TasksRepository],
-})
+})}
+```
 
 ## the env.stage.dev is case sensitive and should be in  this format only
 ```ts
@@ -626,11 +634,27 @@ You an also support values via environment variables which are provided when run
 ```
 
 ### schema validation
+We need to add the certain packages using the yarn
+
+yarn add  @hapi/joi
+
+then use this command
+
+yarn add -D @types/hapi__joi
+
+Take a new file called config.ts and start with th import of the joi .
+
+Using joi.object we can validate the data
 
 
+### JWT secretkey configuration
 
-
-
+1. In the validation schema add JWT_SECRET: Joi.string().required()
+2. Use the secure password generator for the random password copy it
+3. in the .env.stage.dev paste the SECRET_KEY = copied value
+4. In the auth module import the config module,in jwt stratgy inject the config service 
+5. In the jwt strategy we change the value of the secret key to the configservice.get('JWT_SECRET')
+6. In the auth module if we want to call the jwt module register, we also call it with the register async. Same process of the usefactory
 
 
 

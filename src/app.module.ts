@@ -9,11 +9,13 @@ import { HeyTask } from './task/task.entity';
 import { TasksRepository } from './task/task.repository';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { configValidationSchema } from './config.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: [`.env.stage.dev`],
+      validationSchema: configValidationSchema,
     }),
     TaskModule,
     TypeOrmModule.forRootAsync({
