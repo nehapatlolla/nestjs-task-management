@@ -518,35 +518,114 @@ Our nest doesnt know how to use it so we use the interceptors.
 
 Interceptor is created and then we have to impor it in the main.ts. using app.global
 
+## Loggers
+
+Why do we need logs?
+
+we are having so many operations in h epplication, to know whats wrong we use logs, 
+
+**Types:**
+
+1. Log- General purpose
+2. Warning- 
+3. Error- 
+4. Debug- 
+5. Verbose-
+
+![alt text](image-13.png)
 
 
 
+```ts
+async function bootstrap() {
+  const logger = new Logger();
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new TransformInterceptor());
+  const port = 3000;
+  await app.listen(port);
+  logger.log(`Application listening on port ${port}`);
+}
+```
+
+```ts
+@Controller('task')
+@UseGuards(AuthGuard())
+export class TaskController {
+  //instantiating the logger
+  private logger = new Logger('TaskController');
+  constructor(private taskService: TaskService) {}}
+```
+
+when we want to print the objet we need to wrap it with json.stringify
+```ts
+ this.logger.verbose(
+      `User ${user.username} retrieving all tasks. Filters: ${JSON.stringify(filterDto)}`,
+    );
+```
+
+
+#### As all the controllers, services, repositories are the classes, we can apply the logger as same way like class member
+
+Error property will have stack trace, 
+
+
+## Configuration
+
+refers to managing and organizing application settings, which might vary across different environments (development, testing, production).
+
+codebase vs Environment variables
+
+You can define the configuration in the codebase. For example, in a config folder.
+
+You an also support values via environment variables which are provided when running the application.
 
 
 
+- Whenever you are making any changes in the env files you need to restart the application.
 
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: [`.env.stage.dev`],
+    }),
+    TaskModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          // protocol: 'http:',
+          type: 'postgres',
+          synchronize: true,
+          autoLoadEntities: true,
+          entities: [HeyTask],
+          host: configService.get('DB_HOST'),
+          port: configService.get<number>('DB_PORT'),
+          username: configService.get('DB_USERNAME'),
+          password: configService.get('DB_PASSWORD'),
+          database: configService.get('DB_DATABASE'),
+        };
+      },
+    }),
 
+    AuthModule,
+  ],
+  controllers: [AppController, TaskController],
+  providers: [AppService, TaskService, TasksRepository],
+})
 
+## the env.stage.dev is case sensitive and should be in  this format only
+```ts
 
+      DB_HOST=localhost
+      DB_PORT=5432
+      DB_USERNAME=username
+      DB_PASSWORD=password
+      DB_DATABASE=task-management
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### schema validation
 
 
 

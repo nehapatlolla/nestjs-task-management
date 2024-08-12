@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
@@ -18,61 +19,41 @@ import { AuthGuard } from '@nestjs/passport';
 import { UsersEntity } from 'src/auth/user.entity';
 import { GetUser } from 'src/auth/get-user.decorator';
 
-// @Controller('task')
-// export class TaskController {
-//   taskService: TaskService;
-//   constructor(TaskService: TaskService) {
-//     this.taskService = TaskService;}
-
-//   helloWorld() {
-//     this.taskService.doSomething();
-//   }
-//   }
-
 @Controller('task')
 @UseGuards(AuthGuard())
 export class TaskController {
+  //instantiating the logger
+  private logger = new Logger('TaskController');
   constructor(private taskService: TaskService) {}
 
   //   //Task service is a property of the taskcontroller
 
-  //   //   helloWorld() {
-  //   //     this.taskService.doSomething();
-  //   //   }
   @Get()
   //we call this method whenever there is a get request
   getTasks(
     @Query() filterDto: GetTasksFilterDto,
     @GetUser() user: UsersEntity,
   ): Promise<HeyTask[]> {
+    this.logger.verbose(
+      `User ${user.username} retrieving all tasks. Filters: ${JSON.stringify(filterDto)}`,
+    );
     //imported the model.ts interface here in the controller
     return this.taskService.getTasks(filterDto, user);
   }
-  //   // @Post()
-  //   // createNewTasks(
-  //   //   @Body('title') title: string,
-  //   //   @Body('description') description: string,
-  //   // ): Task {
-  //   //   return this.taskService.CreateTask(title, description);
-  //   // }
-  //   @Post()
-  //   CreateTask(@Body() CreateTaskDto: CreateTaskDto): Task {
-  //     return this.taskService.CreateTask(CreateTaskDto);
-  //   }
 
   @Post()
   async CreateTask(
     @Body() CreateTaskDto: CreateTaskDto,
     @GetUser() user: UsersEntity,
   ): Promise<HeyTask> {
+    this.logger.verbose(
+      `User ${user.username} creating  a new task. Data: ${JSON.stringify(CreateTaskDto)}`,
+    );
     return this.taskService.createtask(CreateTaskDto, user);
   }
 
   //   //when we use /: we are saying nestjs that this is a path parameter
-  //   @Get('/:id')
-  //   getTaskById(@Param('id') id: string): Task {
-  //     return this.taskService.getTaskByID(id);
-  //   }
+
   @Get('/:id')
   async getTaskById(
     @Param('id') id: string,
@@ -89,11 +70,6 @@ export class TaskController {
     return this.taskService.DeleteTaskById(id, user);
   }
 
-  //   @Delete('/:id')
-  //   DeleteTaskById(@Param('id') id: string): void {
-  //     return this.taskService.DeletTaskById(id);
-  //   }
-
   @Patch('/:id/status')
   UpdatetaskStatus(
     @Param('id') id: string,
@@ -103,38 +79,4 @@ export class TaskController {
     const { status } = UpdatetaskStatusDto;
     return this.taskService.UpdateTaskById(id, status, user);
   }
-  //   @Patch('/:id/status')
-  //   UpdatetaskStatus(
-  //     @Param('id') id: string,
-  //     @Body() UpdatetaskStatusDto: UpdatetaskStatusDto,
-  //   ): Task {
-  //     const { status } = UpdatetaskStatusDto;
-  //     return this.taskService.UpdateTaskById(id, status);
-  //   }
-
-  //   @Get('status/:status')
-  //   async getTasksByStatus(
-  //     @Param('status') status: TaskStatus,
-  //   ): Promise<HeyTask[]> {
-  //     return this.taskService.getTasksByStatus(status);
-  //   }
-
-  //   @Get('title/:title')
-  //   async getTasksByTitle(@Param('title') title: string): Promise<HeyTask[]> {
-  //     return this.taskService.getTasksByTitle(title);
-  //   }
-  // }
-
-  // // CreateTask(title: string, description: string): Task {
-  // //   const task: Task = {
-  // //     id: uuid(),
-  // //     title,
-  // //     description,
-  // //     status: TaskStatus.OPEN,
-  // //   };
-  // //   //pushing the task which is created into the tasks which is the empty array in the service
-
-  // //   this.tasks.push(task);
-  // //   return task;
-  // // }
 }
