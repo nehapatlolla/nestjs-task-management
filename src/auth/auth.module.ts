@@ -7,7 +7,7 @@ import { UserRepository } from './users.repository';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
-import { HeyTask } from 'src/task/task.entity';
+import { HeyTask } from '../task/task.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({

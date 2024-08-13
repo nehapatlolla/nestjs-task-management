@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { TaskStatus } from './task.model';
-import { UsersEntity } from 'src/auth/user.entity';
+import { UsersEntity } from '../auth/user.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()
