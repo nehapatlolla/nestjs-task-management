@@ -741,11 +741,55 @@ yarn test --watch
 
 In watch mode, the test runner will stay active and automatically re-run tests when it detects changes in the codebase. 
 
+describe () is a function which groups the similar testcases together.
 
+Inside the describe we can also write the individual testcases using it()
 
+These  functions takes two args, one for the description of the test case, and other is to  check the test case--> this can be an arrow fuction
 
+## Why do we use this type of testing?
 
+So for example,  when you write a function which adds the numbers like this 
 
+```ts
+function addNumbers(n1, n2) {
+  return n1 + n2;
+}
+describe('addition', () => {
+  it('adds two numbers', () => {
+    expect(addNumbers(8, 2)).toEqual(10);
+  });
+});
+```
+when the other person tries to refactor the code and then the test cases will be failed. if there are no test cases you donno where the error is.
+
+This is the error the teminal gives if they modify the code.
+
+```ts
+ FAIL  src/example.spec.ts
+  addition
+    ✕ adds two numbers (5 ms)
+
+  ● addition › adds two numbers
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: 10
+    Received: 6
+
+      14 | describe('addition', () => {
+      15 |   it('adds two numbers', () => {
+    > 16 |     expect(addNumbers(8, 2)).toEqual(10);
+         |                              ^
+      17 |   });
+      18 | });
+      19 |
+
+      at Object.<anonymous> (example.spec.ts:16:30)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+```
 
 
 
