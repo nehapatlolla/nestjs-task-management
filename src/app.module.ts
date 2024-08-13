@@ -35,7 +35,6 @@ import { configValidationSchema } from './config.schema';
         //   throw new Error('Database password is missing or not defined.');
         // }
         return {
-          // protocol: 'http:',
           type: 'postgres',
           synchronize: true,
           autoLoadEntities: true,
