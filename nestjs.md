@@ -724,15 +724,22 @@ In summary, "sync" refers to synchronous operations that execute immediately and
 
 Middleware refers to functions or classes that have access to the request-response cycle in an application.
 
-v Middleware functions are used to process requests before they reach the route handlers or to modify the response before it is sent back to the client.
+Middleware functions are used to process requests before they reach the route handlers or to modify the response before it is sent back to the client.
 
 
 
 
+# Unit testing
 
+Nest js uses the jest framework for the testing purpose.
 
+Jest is a dev dependency in the test script which is in the package.json file
 
+Create a spec.ts file
 
+yarn test --watch
+
+In watch mode, the test runner will stay active and automatically re-run tests when it detects changes in the codebase. 
 
 
 
