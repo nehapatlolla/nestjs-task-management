@@ -36,3 +36,107 @@ An **attribute** is a single field that is attached to an item. E.g. Employee Na
 ### Example of How DynamoDB Works
 
 Imagine you are building an e-commerce website. You might use DynamoDB to store information about products, where each product is an item in the database. Each item might have attributes like ProductID (the key), Name, Price, and Category. DynamoDB allows you to quickly retrieve any product by its ProductID, and it scales easily as your catalog grows.
+
+## SQS
+
+## What is SQS?
+
+SQS is a service that helps you manage messages between different parts of your applications.
+
+AWS SQS is used in backend systems to improve communication between services, manage tasks efficiently, ensure reliability, and handle various operational challenges in a scalable and organized manner.
+
+> Main Uses:
+**Decoupling Components:** Connect parts of your system without them needing to talk to each other directly. For example, a web server can put tasks into a queue, and a worker server can process them later.
+
+**Load Balancing:** Smooth out spikes in activity by temporarily storing messages. This way, your system can handle more traffic without getting overwhelmed.
+
+**Background Jobs:** Handle tasks like sending emails or processing data in the background, without making users wait.
+
+**Reliability:** Make sure messages are not lost and are processed even if something goes wrong. Messages stay in the queue until they are successfully handled.
+
+**Scalability:** Automatically handle more messages as your needs grow, without having to manage the infrastructure.
+
+**Workflow Management:** Manage tasks in a specific order by using multiple queues.
+
+Examples:
+Order Processing: An online store uses SQS to handle new orders. When an order is placed, it goes into a queue, and a worker processes it later.
+Log Collection: Gather logs from different services into a queue for easier management and analysis.
+
+1. Creating a Queue
+Sign in to the AWS Management Console and open the SQS console at https://console.aws.amazon.com/sqs/.
+
+Click on "Create queue" to start the setup process.
+
+Choose the type of queue:
+
+Standard Queue: Offers high throughput and at-least-once delivery. It's suitable for most applications.
+FIFO Queue: Ensures that messages are processed exactly once and in the exact order that they are sent. Use this for applications requiring strict ordering and deduplication.
+Configure the queue:
+
+Queue Name: Provide a unique name for your queue.
+Configure Queue Settings: Set options such as message retention period, visibility timeout, and delivery delay.
+Set up access permissions:
+
+Queue Policies: Define who can send messages to or receive messages from the queue using IAM policies or resource-based policies.
+Review and create:
+
+Review your settings and click "Create Queue."
+
+2. Configuring Queue Attributes
+You can customize various attributes of your SQS queue to suit your needs:
+
+Message Retention Period: Time in seconds that SQS retains a message. The default is 4 days, but it can be set from 60 seconds to 14 days.
+Visibility Timeout: Duration that a message remains invisible after being picked up by a consumer. The default is 30 seconds, and it can be set from 0 to 12 hours.
+Message Delay: Time to delay the delivery of messages to the queue. This can be set from 0 to 15 minutes.
+Maximum Message Size: Maximum size of a message. The default is 256 KB, but can be set up to 2 GB with extended messages.
+Receive Message Wait Time: Used for long polling. Sets how long the ReceiveMessage action waits for a message to become available before returning.
+
+3. Queue Security
+Access Control: Use IAM roles and policies to control who can send and receive messages from your queues.
+Encryption: Enable server-side encryption (SSE) to protect the content of your messages at rest.
+
+4. Monitoring and Metrics
+CloudWatch Metrics: Monitor the queue using Amazon CloudWatch metrics, which include metrics such as the number of messages sent, received, and deleted.
+CloudWatch Alarms: Set up alarms based on these metrics to alert you to issues or take automated actions.
+
+5. Integrating with Other AWS Services
+Lambda Functions: You can trigger AWS Lambda functions to process messages from the queue automatically.
+SNS: Combine SQS with Amazon SNS (Simple Notification Service) for pub/sub messaging scenarios.
+
+6. Handling Dead-Letter Queues
+Dead-Letter Queue (DLQ): Configure a DLQ to handle messages that can't be processed successfully after a specified number of attempts. This helps you debug and manage problematic messages.
+
+7. Testing and Debugging
+Send and Receive Messages: Use the AWS Management Console or AWS SDKs to send and receive test messages to ensure your queue is functioning as expected.
+By configuring SQS properly, you can ensure reliable, scalable, and secure message handling for your applications.
+
+### overview of how to configure an SQS (Simple Queue Service) queue in AWS:
+
+1. Create a Queue
+Sign In: Go to the AWS Management Console and open the SQS service.
+Create Queue: Click on "Create queue."
+Queue Type: Choose between Standard (for general use) or FIFO (for ordered, exactly-once processing).
+Queue Name: Enter a name for your queue.
+Settings: Configure basic options like message retention time and visibility timeout.
+
+2. Set Permissions
+Access Control: Set who can send messages to or receive messages from your queue using IAM roles or policies.
+
+3. Optional Settings
+Encryption: Enable if you need to secure your messages.
+Dead-Letter Queue: Set up if you want to handle messages that fail to process after several attempts.
+
+4. Monitor and Test
+Monitor: Use CloudWatch to keep an eye on metrics like message counts.
+Test: Send and receive messages to make sure everything works.
+That’s it! You now have a basic setup for an SQS queue.
+
+## visibility timeout
+
+So when the message is in the queue, and there are several consumers. If once this message is read by one of the consumer, then it is not visible to other consumers. In that visibility timeout, the message should be processed and deleted, if not done so that message will be visible again for the other consumers.
+
+## Delivery delay
+
+So whenever you want to shedule the tasks which should be executed first or at a specific time i n the future, we can set a delay time when they can be visible for the processing
+
+ Delivery Delay is the period you set to delay the delivery of a message to the queue after it has been sent. During this delay period, the message is stored in the queue but is not visible to consumers until the delay period expires.
