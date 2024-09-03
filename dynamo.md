@@ -167,15 +167,15 @@ Review your settings and click "Create Queue."
 
 You can customize various attributes of your SQS queue to suit your needs:
 
-Message Retention Period: Time in seconds that SQS retains a message. The default is 4 days, but it can be set from 60 seconds to 14 days.
+**Message Retention Period:** Time in seconds that SQS retains a message. The default is 4 days, but it can be set from 60 seconds to 14 days.
 
-Visibility Timeout: Duration that a message remains invisible after being picked up by a consumer. The default is 30 seconds, and it can be set from 0 to 12 hours.
+**Visibility Timeout:** Duration that a message remains invisible after being picked up by a consumer. The default is 30 seconds, and it can be set from 0 to 12 hours.
 
-Message Delay: Time to delay the delivery of messages to the queue. This can be set from 0 to 15 minutes.
+**Message Delay:** Time to delay the delivery of messages to the queue. This can be set from 0 to 15 minutes.
 
-Maximum Message Size: Maximum size of a message. The default is 256 KB, but can be set up to 2 GB with extended messages.
+**Maximum Message Size**: Maximum size of a message. The default is 256 KB, but can be set up to 2 GB with extended messages.
 
-Receive Message Wait Time: Used for long polling. Sets how long the ReceiveMessage action waits for a message to become available before returning.
+**Receive Message Wait Time:** Used for long polling. Sets how long the ReceiveMessage action waits for a message to become available before returning.
 
 3. Queue Security
 
@@ -264,3 +264,36 @@ Lambda works in the same way. The use is on-demand when you run the code.
 Build and deploy apps
 
 Monitor and maintain apps
+
+
+
+
+
+## SQS CLI
+
+brew install awscli
+
+aws configure
+
+To create a new SQS queue, use the following command:
+
+aws sqs create-queue --queue-name my-queue
+
+To list all SQS queues in your account:
+
+aws sqs list-queues
+
+
+To send a message to your SQS queue:
+
+aws sqs send-message --queue-url <your-queue-url> --message-body "This is a test message"
+
+Replace <your-queue-url> with the URL of your SQS queue.
+
+To receive messages from your SQS queue:
+
+aws sqs receive-message --queue-url <your-queue-url>
+
+Delete Messages from the Queue:
+
+aws sqs delete-message --queue-url <your-queue-url> --receipt-handle <receipt-handle>
