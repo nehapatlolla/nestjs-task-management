@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { DynamoDBClient, GetItemCommand, PutItemCommand } from '@aws-sdk/client-dynamodb';
+import {
+  DynamoDBClient,
+  GetItemCommand,
+  PutItemCommand,
+} from '@aws-sdk/client-dynamodb';
 import { dynamoDBClient } from './task/dynamo.config';
-
 
 @Injectable()
 export class AppService {
@@ -19,8 +22,8 @@ export class AppService {
     const params = {
       TableName: 'my-table',
       Key: {
-        Id: { S: id }
-      }
+        Id: { S: id },
+      },
     };
 
     try {
@@ -38,8 +41,8 @@ export class AppService {
       TableName: 'my-table',
       Item: {
         Id: { S: id },
-        Name: { S: name }
-      }
+        Name: { S: name },
+      },
     };
 
     try {
