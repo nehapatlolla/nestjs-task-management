@@ -5,13 +5,13 @@ It is a platform, or an engine that we can install in our laptop or production s
 soft devlopers writes the code ryt, that code is abstracted and creates that into package and store that as a image, using that images light weight machines are runned.
 
 Virtual machines are heavy weight. we nedd to install entire os. when we create
- virtual machine, irrespective of the need of the os , we need to install it. 
+virtual machine, irrespective of the need of the os , we need to install it.
 
- we get the compatability issues if we use the virtual machines. 
+we get the compatability issues if we use the virtual machines.
 
- when we install docer, same like virtual machine we will run the containers, they are light weight. 
+when we install docer, same like virtual machine we will run the containers, they are light weight.
 
- becoz of docker engine all the containers are working. resolves the compatiblity
+becoz of docker engine all the containers are working. resolves the compatiblity
 ![alt text](image-15.png)
 
 ![alt text](image-14.png)
@@ -26,56 +26,23 @@ docker images --> gives the list of images we have previously
 
 docker pull nginx--> it is an image we are pulling into our apllication
 
-docker ps -->list all the running Docker containers 
+docker ps -->list all the running Docker containers
 
 docker inspect image localstack --> gives the information about the image
 
-### docker images are the read-only templates 
+### docker images are the read-only templates
 
-> When we pull this image it creates the **writable layer**, there we can store all the tables or whatever we write. 
+> When we pull this image it creates the **writable layer**, there we can store all the tables or whatever we write.
 
 > If we restart te coontainer we will be losing the data
 
-
 ![alt text](image-16.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # DynamoDB
-DynamoDB is a fully managed NoSQL database service provided by Amazon Web Services (AWS). 
 
-It is designed to handle large amounts of data and provide fast, predictable performance with seamless scalability. 
+DynamoDB is a fully managed NoSQL database service provided by Amazon Web Services (AWS).
+
+It is designed to handle large amounts of data and provide fast, predictable performance with seamless scalability.
 
 It requires only a primary key and doesn’t require a schema to create a table.
 
@@ -120,7 +87,7 @@ SQS is a service that helps you manage messages between different parts of your 
 AWS SQS is used in backend systems to improve communication between services, manage tasks efficiently, ensure reliability, and handle various operational challenges in a scalable and organized manner.
 
 > Main Uses:
-**Decoupling Components:** Connect parts of your system without them needing to talk to each other directly. For example, a web server can put tasks into a queue, and a worker server can process them later.
+> **Decoupling Components:** Connect parts of your system without them needing to talk to each other directly. For example, a web server can put tasks into a queue, and a worker server can process them later.
 
 **Load Balancing:** Smooth out spikes in activity by temporarily storing messages. This way, your system can handle more traffic without getting overwhelmed.
 
@@ -148,14 +115,13 @@ Standard Queue: Offers high throughput and at-least-once delivery. It's suitable
 
 FIFO Queue: Ensures that messages are processed exactly once and in the exact order that they are sent. Use this for applications requiring strict ordering and deduplication.
 
- Configure the queue:
+Configure the queue:
 
 Queue Name: Provide a unique name for your queue.
 
-
 ### Configure Queue Settings:
 
- Set options such as message retention period, visibility timeout, and delivery delay.
+Set options such as message retention period, visibility timeout, and delivery delay.
 Set up access permissions:
 
 Queue Policies: Define who can send messages to or receive messages from the queue using IAM policies or resource-based policies.
@@ -200,29 +166,29 @@ SNS: Combine SQS with Amazon SNS (Simple Notification Service) for pub/sub messa
 Dead-Letter Queue (DLQ): Configure a DLQ to handle messages that can't be processed successfully after a specified number of attempts. This helps you debug and manage problematic messages.
 
 7. Testing and Debugging
-Send and Receive Messages: Use the AWS Management Console or AWS SDKs to send and receive test messages to ensure your queue is functioning as expected.
-By configuring SQS properly, you can ensure reliable, scalable, and secure message handling for your applications.
+   Send and Receive Messages: Use the AWS Management Console or AWS SDKs to send and receive test messages to ensure your queue is functioning as expected.
+   By configuring SQS properly, you can ensure reliable, scalable, and secure message handling for your applications.
 
 ### overview of how to configure an SQS (Simple Queue Service) queue in AWS:
 
 1. Create a Queue
-Sign In: Go to the AWS Management Console and open the SQS service.
-Create Queue: Click on "Create queue."
-Queue Type: Choose between Standard (for general use) or FIFO (for ordered, exactly-once processing).
-Queue Name: Enter a name for your queue.
-Settings: Configure basic options like message retention time and visibility timeout.
+   Sign In: Go to the AWS Management Console and open the SQS service.
+   Create Queue: Click on "Create queue."
+   Queue Type: Choose between Standard (for general use) or FIFO (for ordered, exactly-once processing).
+   Queue Name: Enter a name for your queue.
+   Settings: Configure basic options like message retention time and visibility timeout.
 
 2. Set Permissions
-Access Control: Set who can send messages to or receive messages from your queue using IAM roles or policies.
+   Access Control: Set who can send messages to or receive messages from your queue using IAM roles or policies.
 
 3. Optional Settings
-Encryption: Enable if you need to secure your messages.
-Dead-Letter Queue: Set up if you want to handle messages that fail to process after several attempts.
+   Encryption: Enable if you need to secure your messages.
+   Dead-Letter Queue: Set up if you want to handle messages that fail to process after several attempts.
 
 4. Monitor and Test
-Monitor: Use CloudWatch to keep an eye on metrics like message counts.
-Test: Send and receive messages to make sure everything works.
-That’s it! You now have a basic setup for an SQS queue.
+   Monitor: Use CloudWatch to keep an eye on metrics like message counts.
+   Test: Send and receive messages to make sure everything works.
+   That’s it! You now have a basic setup for an SQS queue.
 
 ## visibility timeout
 
@@ -232,10 +198,9 @@ So when the message is in the queue, and there are several consumers. If once th
 
 So whenever you want to shedule the tasks which should be executed first or at a specific time i n the future, we can set a delay time when they can be visible for the processing
 
- Delivery Delay is the period you set to delay the delivery of a message to the queue after it has been sent. During this delay period, the message is stored in the queue but is not visible to consumers until the delay period expires.
+Delivery Delay is the period you set to delay the delivery of a message to the queue after it has been sent. During this delay period, the message is stored in the queue but is not visible to consumers until the delay period expires.
 
-
- ## Serverless Computing
+## Serverless Computing
 
 Serverless is a service where you do not have to think about servers.
 
@@ -246,7 +211,6 @@ The cloud provider handles all infrastructure behind it.
 AWS has a serverless service called AWS Lambda.
 
 ## How AWS Lambda Works
-
 
 Deploy your code to Lambda
 
@@ -265,10 +229,6 @@ Build and deploy apps
 
 Monitor and maintain apps
 
-
-
-
-
 ## SQS CLI
 
 brew install awscli
@@ -283,7 +243,6 @@ To list all SQS queues in your account:
 
 aws sqs list-queues
 
-
 To send a message to your SQS queue:
 
 aws sqs send-message --queue-url <your-queue-url> --message-body "This is a test message"
@@ -297,3 +256,48 @@ aws sqs receive-message --queue-url <your-queue-url>
 Delete Messages from the Queue:
 
 aws sqs delete-message --queue-url <your-queue-url> --receipt-handle <receipt-handle>
+
+docker pull amazon/dynamodb-local
+
+docker run -p 8000:8000 amazon/dynamodb-local
+
+then start the container
+
+aws dynamodb create-table --cli-input-json file://table-script.json --endpoint-url http://localhost:8000
+
+yarn add aws-sdk @aws-sdk/client-dynamodb class-validator uuid
+
+aws dynamodb list-tables --endpoint-url http://localhost:8000
+
+## Using the aws account
+
+1. You dont need the need endpoint url now remove it.
+
+2. Set the original region and original values of the keys
+
+3. aws configure
+4. aws dynamodb list-tables --region us-east-1
+5. create command using aws cli
+
+aws dynamodb create-table \
+ --table-name Books \
+ --attribute-definitions AttributeName=bookId,AttributeType=S \
+ --key-schema AttributeName=bookId,KeyType=HASH \
+ --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+ --region us-east-1
+
+Using AWS Management Console:
+
+Log in to AWS Console.
+
+Navigate to DynamoDB.
+
+Find and select your table (my-table).
+
+Check the "Table details" for the primary key configuration.
+
+aws dynamodb describe-table --table-name my-table --region us-east-1
+
+> Inserting using the cli
+
+aws dynamodb put-item --table-name my-table --item '{"Id": {"N": "123"}, "title": {"S": "Example Book"}, "author": {"S": "Author Name"}, "publicationYear": {"N": "2024"}}'
